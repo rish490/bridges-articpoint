@@ -1,0 +1,23 @@
+vector<vector<int>>res;
+    void bcheck(vector<int>adj[],int node,int papa,vector<int>&tin,vector<int>&low,vector<bool>&vis,int& timer){
+        vis[node]=1;
+        tin[node]=timer;
+        low[node]=timer;
+        timer++;
+        for(int i:adj[node]){
+            if(i==papa){
+                continue;
+            }
+            if(vis[i]==true){
+                low[node]=min(low[node],low[i]);
+            }
+            else{
+                bcheck(adj,i,node,tin,low,vis,timer);
+                low[node]=min(low[node],low[i]);
+                if(low[i]>tin[node]){
+                    res.push_back({node,i});             //this edge is a bridge in given graph 
+                }
+            }
+        }
+        return;
+    }
