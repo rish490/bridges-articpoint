@@ -1,0 +1,27 @@
+ void acheck(int node,int papa,vector<int>adj[],vector<int>&tin,vector<int>&low,int &timer,vector<bool>&vis){
+       
+      tin[node]=timer;
+    low[node]=timer;
+        vis[node]=1;
+        timer++;
+        int tot=0;
+        for(int i:adj[node]){
+            if(i==papa){
+                continue;
+            }
+            if(vis[i]==true){
+                low[node]=min(low[node],low[i]);
+                continue;
+            }
+            tot++;
+            acheck(i,node,adj,tin,low,timer,vis);
+            low[node]=min(low[node],low[i]);
+            if(low[i]>=tin[node]&&papa!=-1){
+                ans=1;   //node artic point hai 
+            }
+        }
+        if(papa==-1&&tot>1){
+            ans=1;   //node is arctic point 
+        }
+        return;
+    }
